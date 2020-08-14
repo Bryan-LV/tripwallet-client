@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "apollo-link-context": "^1.0.20",
+    "axios": "^0.19.2",
     "cashify": "^2.4.2",
     "currency.js": "^1.2.2",
     "dayjs": "^1.8.28",
