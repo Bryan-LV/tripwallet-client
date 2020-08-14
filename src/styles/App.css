@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.App {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
+.trip-pin {
+  top: -10px;
+}
+
+/* const accent='#59E8AC';
+const secondAccent='#F9CE31';
+const white='#fafafa';
+
+const darkBlue='#262C3B';
+const mediumBlue='#343C51';
+const lightBlue='#3E465D'; */
+
+/* Temporary Styles */
