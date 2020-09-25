@@ -6,7 +6,7 @@ import * as dayjs from 'dayjs'
 import { FETCH_TRIPS } from '../../queries/trips'
 import { createDMYDate } from '../../utils/Dates'
 import { toTitleCase } from '../../utils/StringHelpers'
-import langkawi from '../../assets/media/langkawi.jpg'
+import placeholderImg from '../../assets/media/placeholder-trip-image.jpg'
 import pin from '../../assets/media/pin.svg'
 
 function Trips({ setTrip }) {
@@ -48,7 +48,7 @@ function Trips({ setTrip }) {
         return (
           <div className="rounded-lg bg-white max-w-sm m-auto mb-4 mt-3 shadow-lg lg:mx-4" key={trip._id} onClick={() => selectTrip(trip)}>
             <div>
-              <img className="rounded-t-lg object-cover object-center w-full h-64" src={trip.photo ? trip.photo : langkawi} />
+              <img className="rounded-t-lg object-cover object-center w-full h-64" src={trip.photo ? trip.photo : placeholderImg} />
             </div>
             <div className="p-6 rounded-b-lg">
               <h4 className="text-3xl font-semibold">{toTitleCase(trip.tripName)}</h4>

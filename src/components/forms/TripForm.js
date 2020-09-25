@@ -142,9 +142,7 @@ function TripForm({ isTripEdit }) {
               {currencyCodes.map(currencyCode => <option key={currencyCode} value={currencyCode}>{currencyCode}</option>)}
             </Field>
           </div>
-          <div className="">
-            <p className="mx-10 text-gray-400">(optional)</p>
-          </div>
+          <p className="mx-10 text-gray-400">(optional)</p>
           <ErrorMessage name="foreignCurrency">{(errorMsg) => <p className="mx-10 text-red-700">{errorMsg}</p>}</ErrorMessage>
           <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
             <p className="text-md pl-2">Budget</p>
@@ -158,7 +156,8 @@ function TripForm({ isTripEdit }) {
             <label htmlFor="startDate" className="text-md px-2">End Date</label>
             <DatePickerField name="endDate" className="bg-transparent" />
           </div>
-          <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
+          <p className="mx-10 text-gray-400 pt-6">(search for a photo for your trip)</p>
+          <div className="flex items-center border-b border-b-2 border-gray-900 mx-10">
             <input type="text" name="photo" value={searchPhoto} onChange={(e) => setSearchPhoto(e.target.value)} placeholder="Photo" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
             <p className="py-3 text-sm w-full text-center bg-gray-700 text-white rounded-lg cursor-pointer" onClick={searchPexels}>Search Photos</p>
             {openPhotoModal && <PhotoSearchResults searchProp={searchProp} closeModal={closePhotoModal} setSelectedPhoto={setSelectedPhoto} />}
