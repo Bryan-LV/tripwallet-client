@@ -63,6 +63,7 @@ function TripForm({ isTripEdit }) {
   const [updateTrip] = useMutation(UPDATE_TRIP, {
     onError: (err) => console.log(err),
     update: (cache, { data }) => {
+      console.log(data);
       const cachedTrips = cache.readQuery({ query: FETCH_TRIPS });
       const newTrip = data.UpdateTrip;
       cache.writeQuery({
@@ -85,28 +86,32 @@ function TripForm({ isTripEdit }) {
     onCompleted: () => history.push('/')
   });
 
-  const handleSubmit = (values) => {
-    if (selectedPhoto) {
-      values.photo = selectedPhoto;
-    }
-    if (isTripEdit.isEdit) {
-      updateTrip({ variables: values })
-    }
-    else {
-      createTrip({
-        variables: values,
-        update: (cache, { data }) => {
-          const existingTrips = cache.readQuery({
-            query: FETCH_TRIPS
-          });
-          // Add the new trip to the cache
-          cache.writeQuery({
-            query: FETCH_TRIPS,
-            data: { getTrips: [data.createTrip, ...existingTrips.getTrips] }
-          });
-        }
-      })
-      // history.push('/');/
+  const handleSubmit = async (values) => {
+    try {
+      if (selectedPhoto) {
+        values.photo = selectedPhoto;
+      }
+      if (isTripEdit.isEdit) {
+        updateTrip({ variables: values })
+      }
+      else {
+        createTrip({
+          variables: values,
+          update: (cache, { data }) => {
+            const existingTrips = cache.readQuery({
+              query: FETCH_TRIPS
+            });
+            // Add the new trip to the cache
+            cache.writeQuery({
+              query: FETCH_TRIPS,
+              data: { getTrips: [data.createTrip, ...existingTrips.getTrips] }
+            });
+          }
+        })
+        // history.push('/');/
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -136,6 +141,9 @@ function TripForm({ isTripEdit }) {
             <Field name="foreignCurrency" as="select" placeholder="Select Currency" placeholder="foreign currency" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
               {currencyCodes.map(currencyCode => <option key={currencyCode} value={currencyCode}>{currencyCode}</option>)}
             </Field>
+          </div>
+          <div className="">
+            <p className="mx-10 text-gray-400">(optional)</p>
           </div>
           <ErrorMessage name="foreignCurrency">{(errorMsg) => <p className="mx-10 text-red-700">{errorMsg}</p>}</ErrorMessage>
           <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">

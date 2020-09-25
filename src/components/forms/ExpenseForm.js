@@ -76,14 +76,14 @@ function ExpenseForm({ expenseData }) {
   // Mutations
   const [addExpense] = useMutation(CREATE_EXPENSE, {
     onError: err => console.log(err),
-    // update: (cache, { data }) => {
-    //   const cachedTrip = cache.readQuery({ query: FETCH_TRIP, variables: { id: tripID } });
-    //   cache.writeQuery({
-    //     query: FETCH_TRIP,
-    //     variables: { id: tripID },
-    //     data: { getTrip: { ...cachedTrip.getTrip, expenses: [...cachedTrip.getTrip.expenses, data.createExpense] } }
-    //   })
-    // }
+    update: (cache, { data }) => {
+      const cachedTrip = cache.readQuery({ query: FETCH_TRIP, variables: { id: tripID } });
+      cache.writeQuery({
+        query: FETCH_TRIP,
+        variables: { id: tripID },
+        data: { getTrip: { ...cachedTrip.getTrip, expenses: [...cachedTrip.getTrip.expenses, data.createExpense] } }
+      })
+    }
   })
 
   const [updateExpense] = useMutation(UPDATE_EXPENSE, {
