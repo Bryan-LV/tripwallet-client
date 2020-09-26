@@ -26,7 +26,7 @@ const editVals = (formDetails) => {
     tripID: formDetails._id,
     tripName: formDetails.tripName,
     foreignCurrency: formDetails.foreignCurrency,
-    budget: formDetails.budget ? formDetails.budget : '',
+    budget: formDetails.budget ? formDetails.budget : 0,
     startDate: formDetails.startDate,
     endDate: formDetails.endDate ? formDetails.endDate : '',
     photo: formDetails.photo ? formDetails.photo : ''
@@ -63,7 +63,6 @@ function TripForm({ isTripEdit }) {
   const [updateTrip] = useMutation(UPDATE_TRIP, {
     onError: (err) => console.log(err),
     update: (cache, { data }) => {
-      console.log(data);
       const cachedTrips = cache.readQuery({ query: FETCH_TRIPS });
       const newTrip = data.UpdateTrip;
       cache.writeQuery({
