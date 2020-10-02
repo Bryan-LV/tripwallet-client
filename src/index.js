@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/client'
 import AuthContextProvider from './context/auth/AuthContext'
 import client from './utils/apolloClient'
+import './styles/tailwind-output.css'
 import './styles/App.css'
 
 ReactDOM.render(
