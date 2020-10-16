@@ -5,9 +5,8 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case LOGIN_USER:
     case REGISTER_USER:
-      // payload : {_id: [ID], username: [username]}
+      // payload is {_id: [ID], username: [username]}
       return { user: action.payload };
-      break;
     case LOGOUT:
       localStorage.clear()
       return { user: null };
@@ -21,7 +20,6 @@ const authReducer = (state, action) => {
       return { user }
     default:
       return state;
-      break;
   }
 }
 

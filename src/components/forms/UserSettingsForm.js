@@ -86,7 +86,7 @@ function UserSettingsForm({ user }) {
           <ErrorMessage name="baseCurrency">{(errorMsg) => <p className="mx-10 px-2 text-red-700">{errorMsg}</p>}</ErrorMessage>
 
           <div className="text-center mt-4">
-            <button type="submit" className="py-3 px-6 text-lg font-medium text-white rounded-lg bg-red-600 hover:bg-red-700 w-3/4 md:w-1/2">Save Trip</button>
+            <button type="submit" className="py-3 px-6 text-lg font-medium text-white rounded-lg bg-red-600 hover:bg-red-700 w-3/4 md:w-1/2">Save Edits</button>
           </div>
         </Form>
       </Formik>

@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const loginSchemaValidation = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string().matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"), 'password must be 8 characters and contain 1 lowercase and uppercase letter, 1 number, and 1 special character').required('password must be 8 characters and contain 1 lowercase and uppercase letter, 1 number, and 1 special character')
+  password: yup.string().matches(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"), 'password min. 8 characters. 1 lowercase and uppercase letter. 1 number, and 1 special character (!@#$...)').required('password must be 8 characters and contain 1 lowercase and uppercase letter, 1 number, and 1 special character')
 });
 
 const registerSchemaValidation = yup.object().shape({

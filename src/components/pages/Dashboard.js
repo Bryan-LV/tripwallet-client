@@ -8,7 +8,7 @@ function Dashboard({ user, setTrip, auth, setTripEdit }) {
     if (!user) {
       history.push('/login');
     }
-  }, [user])
+  }, [user, history])
 
   return (
     <div className="bg-gray">

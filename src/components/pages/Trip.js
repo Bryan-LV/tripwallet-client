@@ -5,12 +5,13 @@ import { useHistory } from 'react-router-dom'
 
 import { FETCH_TRIP } from '../../queries/trips'
 import TripData from '../presentational/TripData'
+import Loader from '../presentational/Loader'
 
 function Trip({ trip, setTripEdit, setExpenseData, setExpenseItem }) {
   let tripID = trip !== null ? trip._id : JSON.parse(localStorage.getItem('tripID'));
   const history = useHistory();
 
-  const { error, data } = useQuery(FETCH_TRIP, { variables: { id: tripID } });
+  const { error, data, loading } = useQuery(FETCH_TRIP, { variables: { id: tripID } });
 
   useEffect(() => {
     let tripID = localStorage.getItem('tripID');
@@ -21,12 +22,13 @@ function Trip({ trip, setTripEdit, setExpenseData, setExpenseItem }) {
 
   // TODO: handle error
   if (error) console.log(error);
-
+  if (loading && !data) return <Loader />
   return (
     <div >
       <TripData data={data} setTripEdit={setTripEdit} setExpenseData={setExpenseData} setExpenseItem={setExpenseItem} />
-    </div>
+    </div >
   )
+
 }
 
 export default Trip

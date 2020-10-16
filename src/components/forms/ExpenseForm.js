@@ -107,7 +107,7 @@ function ExpenseForm({ expenseData }) {
       // if there are rates, then loop through rates in object, check if foreignCurrency in props matches FC in rates obj
       let currencyIsCorrect;
       for (const currency in rates.rates) {
-        if (currency == currencies.foreignCurrency) {
+        if (currency === currencies.foreignCurrency) {
           currencyIsCorrect = true;
         }
       }

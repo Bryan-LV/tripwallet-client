@@ -97,13 +97,20 @@ const DELETE_TRIP = gql`
 `
 
 const SEARCH_PHOTOS = gql`
-  query ($query: String!) {
-    getPhotos(query: $query){
-      url
-      width
-      id
-      src {
-        medium
+  query ($query: String!, $page: Int) {
+    getPhotos(query: $query, page: $page){
+      total_results
+      page
+      per_page
+      next_page
+      prev_page
+      photos {
+        url
+        width
+        id
+        src {
+          medium
+        }
       }
     }
   }
