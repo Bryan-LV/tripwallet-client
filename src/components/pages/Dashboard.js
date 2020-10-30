@@ -1,14 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useHistory, Link } from 'react-router-dom'
+import { AlertContext } from '../../context/alert/AlertContext';
 import Trips from '../containers/Trips';
+import { v4 as uuid } from 'uuid';
 
 function Dashboard({ user, setTrip, auth, setTripEdit }) {
+  const { alertDispatch } = useContext(AlertContext);
+
   const history = useHistory();
   useEffect(() => {
     if (!user) {
       history.push('/login');
     }
   }, [user, history])
+
+  const setAlert = (msg) => {
+    alertDispatch.setAlert(msg, uuid());
+  }
+
+  const clearAlert = (id) => {
+    alertDispatch.clearAlert(id);
+  }
 
   return (
     <div className="bg-gray">

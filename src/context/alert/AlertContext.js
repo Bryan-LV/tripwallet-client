@@ -1,16 +1,19 @@
 
 import React, { createContext, useReducer } from 'react'
-import alertReducer from './AlertReducer';
-import { SET_ALERT } from './alertTypes';
+import alertReducer from './alertReducer';
+import { CLEAR_ALERT, SET_ALERT } from './alertTypes';
+import { v4 as uuid } from 'uuid';
 
 export const AlertContext = createContext();
 
 function AlertContextProvider(props) {
-  const [alertState, dispatch] = useReducer(alertReducer, { msg: null });
+  const [alertState, dispatch] = useReducer(alertReducer, []);
 
   const alertOperations = {
-    setAlert: () => dispatch({ type: SET_ALERT, payload: { msg: 'set an alert' } })
+    setAlert: (msg) => dispatch({ type: SET_ALERT, payload: { msg, id: uuid() } }),
+    clearAlert: (id) => dispatch({ type: CLEAR_ALERT, payload: { id } })
   }
+
   return (
     <AlertContext.Provider value={{
       alertState: alertState,

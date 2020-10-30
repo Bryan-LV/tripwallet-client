@@ -4,6 +4,7 @@ import { useLazyQuery } from '@apollo/client'
 
 import { Auth, Dashboard, Trip, ExpenseItem, UserSettings, AccountDeletion } from './components/pages'
 import { TripForm, ExpenseForm, UserSettingsForm } from './components/forms'
+import AlertComponent from './components/presentational/AlertComponent'
 import { AuthContext } from './context/auth/AuthContext'
 import { CHECK_AUTH_TOKEN } from './queries/user'
 import checkToken from './utils/checkToken'
@@ -45,6 +46,7 @@ function App() {
     <div className="App relative max-w-screen-xl m-auto">
       <Navbar setSidebar={setSidebar} showMenu={user ? true : false} />
       {openSidebar ? <Sidebar user={user} auth={auth} setSidebar={setSidebar} /> : null}
+      <AlertComponent />
       <Switch>
         <Route exact path="/" render={() => <Dashboard user={user} auth={auth} setTrip={setTrip} setTripEdit={setTripEdit} />} />
         <Route exact path="/trip" render={() => <Trip trip={trip} setTripEdit={setTripEdit} setExpenseData={setExpenseData} setExpenseItem={setExpenseItem} />} />

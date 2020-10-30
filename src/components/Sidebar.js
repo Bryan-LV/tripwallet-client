@@ -8,7 +8,7 @@ function Sidebar({ user, auth, setSidebar }) {
       <div className="flex flex-row justify-between items-center py-4">
         <h3 className="text-xl">{user.username ? `Hello, ${toTitleCase(user.username)}` : "Hello there"}</h3>
         <div className="" onClick={setSidebar}>
-          <h4 className="font-bold text-2xl">X</h4>
+          <h4 className="font-bold text-2xl cursor-pointer">X</h4>
         </div>
       </div>
       <div className="w-full m-auto bg-gray-900" style={{ height: '1px' }}></div>

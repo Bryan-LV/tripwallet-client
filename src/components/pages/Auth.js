@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useMutation } from '@apollo/client'
 import { useHistory, Link, Route } from 'react-router-dom'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
@@ -6,16 +6,16 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { loginSchemaValidation, registerSchemaValidation } from '../../utils/authFormValidation'
 import { LOGIN_USER, REGISTER_USER } from '../../queries/user'
 import currencyCodes from '../../utils/currencyCodes'
+import { AlertContext } from '../../context/alert/AlertContext'
 
 const Login = ({ auth, url }) => {
+  const { alertDispatch } = useContext(AlertContext);
   const [queryLogin] = useMutation(LOGIN_USER, {
     onCompleted: async (data) => {
       auth.login(data.login);
     },
-    onError: (error) => {
-      // TODO: Handle Error ( alert context maybe?)
-      console.log(error.message);
-      console.log(error);
+    onError: () => {
+      alertDispatch.setAlert('Uh oh, looks like you entered in a wrong email or password');
     }
   })
 

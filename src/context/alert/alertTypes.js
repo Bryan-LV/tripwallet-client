@@ -1,3 +1,4 @@
 const SET_ALERT = 'SET_ALERT';
+const CLEAR_ALERT = 'CLEAR_ALERT';
 
-export { SET_ALERT }
+export { SET_ALERT, CLEAR_ALERT }

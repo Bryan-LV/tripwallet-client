@@ -20,17 +20,16 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "uuid": "^8.3.1",
     "yup": "^0.29.1"
   },
   "scripts": {
     "build:tailwind": "tailwindcss build src/styles/tailwind.css -o src/styles/tailwind-output.css",
     "watch:tailwind": "chokidar 'src/**/*.css' --ignore src/styles/tailwind-output.css -c 'npm run build:tailwind' ",
-
     "start": "npm-run-all build:tailwind --parallel watch:tailwind start:react",
     "start:react": "react-scripts start",
-
-    "prebuild": "npm run build:tailwind",
-    "build": "CI='false' react-scripts build"
+    "prebuild": "NODE_ENV=production npm run build:tailwind",
+    "build": "CI='false' NODE_ENV=production react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
