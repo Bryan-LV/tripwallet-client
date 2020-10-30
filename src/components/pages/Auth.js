@@ -120,11 +120,6 @@ const Register = ({ auth }) => {
         </div>
         <ErrorMessage name="email">{(errorMsg) => <p className="mx-10 px-2 text-red-700">{errorMsg}</p>}</ErrorMessage>
 
-        <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
-          <Field type="text" name="photo" placeholder="Photo" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
-        </div>
-        <ErrorMessage name="photo">{(errorMsg) => <p className="mx-10 px-2 text-red-700">{errorMsg}</p>}</ErrorMessage>
-
         <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10 mb-8">
           <Field name="baseCurrency" as="select" placeholder="Select Currency" placeholder="Base Currency" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
             {currencyCodes.map(currencyCode => <option key={currencyCode} value={currencyCode}>{currencyCode}</option>)}
