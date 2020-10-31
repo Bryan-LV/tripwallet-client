@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client'
 import { useHistory, Link, Route } from 'react-router-dom'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 
+import useToggle from '../../hooks/useToggle'
 import { loginSchemaValidation, registerSchemaValidation } from '../../utils/authFormValidation'
 import { LOGIN_USER, REGISTER_USER } from '../../queries/user'
 import currencyCodes from '../../utils/currencyCodes'
@@ -64,6 +65,7 @@ const Login = ({ auth, url }) => {
 }
 
 const Register = ({ auth }) => {
+  const [showPasswordTip, togglePasswordTip] = useToggle(false);
   const [queryRegister] = useMutation(REGISTER_USER, {
     onCompleted: async (data) => {
       auth.login(data.register);
@@ -127,6 +129,12 @@ const Register = ({ auth }) => {
         </div>
         <ErrorMessage name="baseCurrency">{(errorMsg) => <p className="mx-10 px-2 text-red-700">{errorMsg}</p>}</ErrorMessage>
 
+        <div className="flex flex-col items-end justify-end mx-10 cursor-pointer relative">
+          <svg onMouseEnter={() => togglePasswordTip()} onClick={() => togglePasswordTip()} className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div className={`text-sm text-gray-600 ${showPasswordTip ? 'block' : 'hidden'}`}>
+            <p className="">Min. 8 character password that includes 1 lower & uppercase letter, 1 number, and 1 special character (!@#$...)</p>
+          </div>
+        </div>
         <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
           <Field type="password" name="password" placeholder="Password" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
         </div>
