@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import Axios from 'axios'
 import dayjs from 'dayjs'
 
+import { AlertContext } from '../../context/alert/AlertContext'
 import { createYMDDate } from '../../utils/Dates'
 import { CREATE_EXPENSE, UPDATE_EXPENSE } from '../../queries/expenses'
 import { FETCH_TRIP } from '../../queries/trips'
@@ -64,6 +65,7 @@ const getCurrenciesFromLS = () => {
 
 
 function ExpenseForm({ expenseData }) {
+  const { alertDispatch } = useContext(AlertContext);
   const tripID = expenseData ? expenseData.tripID : JSON.parse(localStorage.getItem('tripID'));
   const currencies = expenseData ? expenseData.currencies : getCurrenciesFromLS();
   const categories = expenseData ? expenseData.categories : ['Food', 'Accommodation'];
@@ -73,9 +75,12 @@ function ExpenseForm({ expenseData }) {
   const [isSpread, setSpread] = useState(false); // expense spread over mult. days
   const [exchangeRate, setExchangeRate] = useState(null);
   const history = useHistory();
-  // Mutations
+
+  // Apollo Hooks
   const [addExpense] = useMutation(CREATE_EXPENSE, {
-    onError: err => console.log(err),
+    onError: err => {
+      alertDispatch.setAlert('Sorry, looks like expense was not added. Please try again.')
+    },
     update: (cache, { data }) => {
       const cachedTrip = cache.readQuery({ query: FETCH_TRIP, variables: { id: tripID } });
       cache.writeQuery({
@@ -87,7 +92,9 @@ function ExpenseForm({ expenseData }) {
   })
 
   const [updateExpense] = useMutation(UPDATE_EXPENSE, {
-    onError: (err) => console.log(err),
+    onError: (err) => {
+      alertDispatch.setAlert('Sorry, looks like expense was not updated. Please try again.')
+    }
   })
 
   const fetchExchangeRate = async () => {
@@ -141,8 +148,7 @@ function ExpenseForm({ expenseData }) {
     if (formData.endDate) {
       const checkDates = dayjs(formData.endDate).isAfter(formData.startDate);
       if (!checkDates) {
-        // TODO: Throw error
-        console.error('end date is before start date');
+        alertDispatch.setAlert('Oops, looks like your trip end date is before your start date.');
         return;
       }
       // calculate spread by difference in start and end date

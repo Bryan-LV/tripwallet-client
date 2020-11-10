@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { useMutation } from '@apollo/client'
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 
+import { AlertContext } from '../../context/alert/AlertContext'
 import currencyCodes from '../../utils/currencyCodes'
 import { CREATE_TRIP, UPDATE_TRIP, DELETE_TRIP, FETCH_TRIPS } from '../../queries/trips'
 import PhotoSearchResults from '../presentational/PhotoSearchResults'
@@ -41,15 +42,18 @@ const validation = yup.object({
 
 function TripForm({ isTripEdit }) {
   const history = useHistory();
+  const { alertDispatch } = useContext(AlertContext);
   const [deleteSwitch, setDeleteSwitch] = useState(false);
   const [searchPhoto, setSearchPhoto] = useState('');
   const [searchProp, setSearchProp] = useState('');
   const [selectedPhoto, setSelectedPhoto] = useState('');
   const [openPhotoModal, setPhotoModal] = useState(false);
 
-  // Mutations 
+  // Apollo Queries
   const [createTrip] = useMutation(CREATE_TRIP, {
-    onError: (err) => console.log(err),
+    onError: () => {
+      alertDispatch.setAlert('Sorry, looks like your trip could not be created. Please try again.')
+    },
     update: (cache, { data }) => {
       const cachedTrips = cache.readQuery({ query: FETCH_TRIPS });
       const newTrip = data.CreateTrip;
@@ -61,7 +65,9 @@ function TripForm({ isTripEdit }) {
     onCompleted: () => history.push('/')
   });
   const [updateTrip] = useMutation(UPDATE_TRIP, {
-    onError: (err) => console.log(err),
+    onError: (err) => {
+      alertDispatch.setAlert('Sorry, looks like your trip could not be updated. Please try again.')
+    },
     update: (cache, { data }) => {
       const cachedTrips = cache.readQuery({ query: FETCH_TRIPS });
       const newTrip = data.UpdateTrip;
@@ -73,7 +79,9 @@ function TripForm({ isTripEdit }) {
     onCompleted: () => history.push('/trip')
   });
   const [deleteTrip] = useMutation(DELETE_TRIP, {
-    onError: (err) => console.log(err),
+    onError: (err) => {
+      alertDispatch.setAlert('Sorry, looks like your trip could not be deleted. Please try again.')
+    },
     update: (cache, { data }) => {
       const cachedTrips = cache.readQuery({ query: FETCH_TRIPS });
       const filterTrips = cachedTrips.getTrips.filter(trip => trip._id !== isTripEdit.formDetails._id)
