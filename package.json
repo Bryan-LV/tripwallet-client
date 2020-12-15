@@ -29,7 +29,8 @@
     "start": "npm-run-all build:tailwind --parallel watch:tailwind start:react",
     "start:react": "react-scripts start",
     "prebuild": "NODE_ENV=production npm run build:tailwind",
-    "build": "CI='false' NODE_ENV=production react-scripts build"
+    "build": "CI='false' NODE_ENV=production react-scripts build",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,13 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Switch, Route } from 'react-router-dom'
-import { useLazyQuery } from '@apollo/client'
+import React, { useContext, useState } from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { Auth, Dashboard, Trip, ExpenseItem, UserSettings, AccountDeletion } from './components/pages'
 import { TripForm, ExpenseForm, UserSettingsForm } from './components/forms'
 import AlertComponent from './components/presentational/AlertComponent'
 import { AuthContext } from './context/auth/AuthContext'
-import { CHECK_AUTH_TOKEN } from './queries/user'
-import checkToken from './utils/checkToken'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import useSidebar from './hooks/useSideBar'
@@ -16,47 +13,105 @@ import { AlertContext } from './context/alert/AlertContext'
 function App() {
   const { auth, user } = useContext(AuthContext);
   const { alertDispatch } = useContext(AlertContext);
-  const [trip, setTrip] = useState(null); // select trip when user clicks on trip box
-  const [isTripEdit, setTripEdit] = useState({ isEdit: false, }); // is trip form creating a new trip or editing a trip
-  const [expenseData, setExpenseData] = useState(null); // editing an expense
-  const [expenseItem, setExpenseItem] = useState(null) // expense info for showing single expense
+  // User's selected trip
+  const [trip, setTrip] = useState(null);
+  // Is trip form creating a new trip or editing a trip
+  const [isTripEdit, setTripEdit] = useState({ isEdit: false });
+  // For editing expense
+  const [expenseData, setExpenseData] = useState(null);
+  // State for showing single expense info
+  const [expenseItem, setExpenseItem] = useState(null)
   const [openSidebar, setSidebar] = useSidebar();
-  const [queryToken] = useLazyQuery(CHECK_AUTH_TOKEN, {
-    onCompleted: () => {
-      auth.persistUser();
-    },
-    onError: () => {
-      alertDispatch.setAlert('Session has expired, please login to continue');
-    }
-  });
-
-  useEffect(() => {
-    const persistUser = async () => {
-      // check if token is set and valid
-      const isValid = await checkToken()
-      if (isValid) {
-        queryToken()
-      }
-    }
-    persistUser()
-  }, [user, queryToken])
 
   return (
     <div className="App relative max-w-screen-xl m-auto">
+
       <Navbar setSidebar={setSidebar} showMenu={user ? true : false} />
       {openSidebar ? <Sidebar user={user} auth={auth} setSidebar={setSidebar} /> : null}
       <AlertComponent />
+
       <Switch>
-        <Route exact path="/" render={() => <Dashboard user={user} auth={auth} setTrip={setTrip} setTripEdit={setTripEdit} />} />
-        <Route exact path="/trip" render={() => <Trip trip={trip} setTripEdit={setTripEdit} setExpenseData={setExpenseData} setExpenseItem={setExpenseItem} />} />
-        <Route exact path="/trip/expense" render={() => <ExpenseItem data={expenseItem} setExpenseData={setExpenseData} alertDispatch={alertDispatch} auth={auth} />} />
-        <Route exact path="/trip/expenseform" render={() => <ExpenseForm expenseData={expenseData} />} />
-        <Route exact path="/tripform" render={() => <TripForm user={user} isTripEdit={isTripEdit} />} />
-        <Route exact path="/login" render={() => <Auth auth={auth} user={user} />} />
-        <Route exact path="/register" render={() => <Auth auth={auth} user={user} />} />
-        <Route exact path="/user" render={() => <UserSettings user={user} />} />
-        <Route exact path="/user/edit" render={() => <UserSettingsForm user={user} />} />
-        <Route exact path="/user/accountdeletion" render={() => <AccountDeletion user={user} auth={auth} />} />
+
+        {/* Dashboard */}
+        <Route exact path="/" render={() => (
+          user ?
+            <Dashboard user={user} auth={auth} setTrip={setTrip} setTripEdit={setTripEdit} />
+            :
+            <Redirect to="/login" />
+        )} />
+
+        {/* Selected Trip */}
+        <Route exact path="/trip" render={() => (
+          user ?
+            <Trip trip={trip} setTripEdit={setTripEdit} setExpenseData={setExpenseData} setExpenseItem={setExpenseItem} />
+            :
+            <Redirect to="/login" />
+        )} />
+
+        {/* Expense Item */}
+        <Route exact path="/trip/expense" render={() => (
+          user ?
+            <ExpenseItem data={expenseItem} setExpenseData={setExpenseData} alertDispatch={alertDispatch} auth={auth} />
+            :
+            <Redirect to="/login" />
+        )} />
+
+        {/* Expense Form */}
+        <Route exact path="/trip/expenseform" render={() => (
+          user ?
+            <ExpenseForm expenseData={expenseData} />
+            :
+            <Redirect to="/login" />
+        )} />
+
+        {/* Trip Form */}
+        <Route exact path="/tripform" render={() => (
+          user ?
+            <TripForm user={user} isTripEdit={isTripEdit} />
+            :
+            <Redirect to="/login" />
+        )} />
+
+        {/* Login Page */}
+        <Route exact path="/login" render={() => (
+          user ?
+            <Redirect to="/" />
+            :
+            <Auth auth={auth} user={user} />
+        )} />
+
+        {/* Register Page */}
+        <Route exact path="/register" render={() => (
+          user ?
+            <Redirect to="/" />
+            :
+            <Auth auth={auth} user={user} />
+        )} />
+
+        {/* User settings */}
+        <Route exact path="/user" render={() => (
+          user ?
+            <UserSettings user={user} />
+            :
+            <Redirect to="/login" />
+        )} />
+
+        {/* Edit user settings */}
+        <Route exact path="/user/edit" render={() => (
+          user ?
+            <UserSettingsForm user={user} />
+            :
+            <Redirect to="/login" />
+        )} />
+
+        {/* Confirmation page to delete account */}
+        <Route exact path="/user/accountdeletion" render={() => (
+          user ?
+            <AccountDeletion user={user} auth={auth} />
+            :
+            <Redirect to="/login" />
+        )} />
+
       </Switch>
     </div >
   );

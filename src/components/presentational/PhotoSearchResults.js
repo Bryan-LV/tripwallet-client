@@ -12,24 +12,22 @@ function PhotoSearchResults({ searchProp, closeModal, setSelectedPhoto }) {
   const [loadMore, triggerLoadMore] = useState(false);
 
   const [searchPhotos, { fetchMore }] = useLazyQuery(SEARCH_PHOTOS, {
-    onCompleted: data => {
+    onCompleted(data) {
       if (data.getPhotos.photos.length === 0) {
         setSearchError('Uh oh. Looks like we couldn\'t find what you were looking for. Try another search keyword.')
       }
       setPhotos(data.getPhotos)
     },
+    onError(err) {
+      // TODO: Handle Error
+      console.log(err)
+    }
 
   });
 
   useEffect(() => {
-    try {
-      if (searchProp !== '') {
-        searchPhotos({ variables: { query: searchProp } })
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [searchProp])
+    searchProp !== '' && searchPhotos({ variables: { query: searchProp, page: null } })
+  }, [searchProp, searchPhotos])
 
   useEffect(() => {
     if (loadMore) {
@@ -37,8 +35,6 @@ function PhotoSearchResults({ searchProp, closeModal, setSelectedPhoto }) {
         {
           variables: { page: photos.page + 1 },
           updateQuery: (prevQuery, newQuery) => {
-            console.log('prev query', prevQuery);
-            console.log('new query', newQuery);
             const prevQueryPhotos = prevQuery.getPhotos.photos;
             const newQueryResults = newQuery.fetchMoreResult.getPhotos;
             const newPhotos = newQuery.fetchMoreResult.getPhotos.photos;

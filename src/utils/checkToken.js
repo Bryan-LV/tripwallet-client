@@ -1,12 +1,12 @@
 import JwtDecode from "jwt-decode";
 
-export default async function checkToken() {
+export default function checkToken() {
   try {
-    // check if token is set in local storage
+    // Check if token is set in local storage
     let token = JSON.parse(localStorage.getItem('token'));
-    // no token - return false
+    // No token - return false
     if (!token) return false;
-    // token ? check if expired
+    // Token ? check if expired
     let decodedToken = JwtDecode(token);
     if (Date.now() >= decodedToken.exp * 1000) {
       localStorage.clear();

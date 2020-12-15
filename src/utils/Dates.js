@@ -33,4 +33,15 @@ const createDMYDate = (date) => {
 }
 
 
-export { createYMDDate, createDMYDate }
+const setDates = (startDate, endDate) => {
+  const formatStartDate = createDMYDate(startDate);
+  if (!endDate) {
+    return formatStartDate;
+  } else {
+    const formatEndDate = createDMYDate(endDate);
+    return `${formatStartDate} - ${formatEndDate} `
+  }
+}
+
+
+export { createYMDDate, createDMYDate, setDates }

@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 
-
 import { FETCH_TRIP } from '../../queries/trips'
 import TripData from '../presentational/TripData'
 import Loader from '../presentational/Loader'
 
 function Trip({ trip, setTripEdit, setExpenseData, setExpenseItem }) {
+  // For case if user refreshes page
   let tripID = trip !== null ? trip._id : JSON.parse(localStorage.getItem('tripID'));
   const history = useHistory();
 

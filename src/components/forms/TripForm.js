@@ -64,6 +64,7 @@ function TripForm({ isTripEdit }) {
     },
     onCompleted: () => history.push('/')
   });
+
   const [updateTrip] = useMutation(UPDATE_TRIP, {
     onError: (err) => {
       alertDispatch.setAlert('Sorry, looks like your trip could not be updated. Please try again.')
@@ -78,6 +79,7 @@ function TripForm({ isTripEdit }) {
     },
     onCompleted: () => history.push('/trip')
   });
+
   const [deleteTrip] = useMutation(DELETE_TRIP, {
     onError: (err) => {
       alertDispatch.setAlert('Sorry, looks like your trip could not be deleted. Please try again.')
@@ -163,6 +165,8 @@ function TripForm({ isTripEdit }) {
             <label htmlFor="startDate" className="text-md px-2">End Date</label>
             <DatePickerField name="endDate" className="bg-transparent" />
           </div>
+
+
           <p className="mx-10 text-gray-400 pt-6">(search for a photo for your trip)</p>
           <div className="flex items-center border-b border-b-2 border-gray-900 mx-10">
             <input type="text" name="photo" value={searchPhoto} onChange={(e) => setSearchPhoto(e.target.value)} placeholder="Photo" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
@@ -172,6 +176,8 @@ function TripForm({ isTripEdit }) {
           <div className="mx-10 my-4">
             {selectedPhoto && <img src={selectedPhoto} alt="" />}
           </div>
+
+
           <div className="text-center mt-4">
             <button type="submit" className="py-2 px-6 text-lg font-medium text-white rounded-lg bg-red-600 hover:bg-red-700 w-3/4 md:w-1/2">{isTripEdit.isEdit ? 'Update Trip' : 'Save Trip'}</button>
           </div>

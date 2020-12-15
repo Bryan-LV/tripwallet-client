@@ -1,46 +1,33 @@
-import React, { useEffect } from 'react'
-import { useLazyQuery } from '@apollo/client'
+import React from 'react'
+import { useQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
-import * as dayjs from 'dayjs'
 
 import { FETCH_TRIPS } from '../../queries/trips'
-import { createDMYDate } from '../../utils/Dates'
+import { setDates } from '../../utils/Dates'
 import { toTitleCase } from '../../utils/StringHelpers'
 import placeholderImg from '../../assets/media/placeholder-trip-image.jpg'
 import pin from '../../assets/media/pin.svg'
+import Loader from '../presentational/Loader'
 
 function Trips({ setTrip }) {
-  // query user trip
-  const [fetchTrips, { data }] = useLazyQuery(FETCH_TRIPS, {
+  const { data, loading } = useQuery(FETCH_TRIPS, {
     onError: err => console.log(err)
   });
-
   const history = useHistory();
 
-  useEffect(() => {
-    fetchTrips();
-  }, [])
-
   const selectTrip = (trip) => {
-    // set Trip
     setTrip(trip);
-    // set trip id to local storage
+    // Set trip id to local storage
     localStorage.setItem('tripID', JSON.stringify(trip._id));
+
     // FIXME: Maybe useful later on?
     localStorage.setItem('tripCurrencies', JSON.stringify({ baseCurrency: trip.baseCurrency, foreignCurrency: trip.foreignCurrency }));
-    // send user to trip page
+
+    // Send user to trip page
     history.push('/trip');
   }
 
-  const setDates = (startDate, endDate) => {
-    const formatStartDate = createDMYDate(startDate);
-    if (!endDate) {
-      return formatStartDate;
-    } else {
-      const formatEndDate = createDMYDate(endDate);
-      return `${formatStartDate} - ${formatEndDate} `
-    }
-  }
+  if (loading && !data) return <Loader />
 
   return (
     <div className="mx-2 cursor-pointer md:grid md:grid-cols-2 lg:grid-cols-3">
