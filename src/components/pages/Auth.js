@@ -12,6 +12,8 @@ import { AlertContext } from '../../context/alert/AlertContext'
 const Login = ({ auth, url }) => {
   const { alertDispatch } = useContext(AlertContext);
   const [passwordType, setPasswordType] = useState('password');
+  const [hideSubmitButton, setHideSubmitButton] = useState(false);
+
   const [queryLogin] = useMutation(LOGIN_USER, {
     onCompleted: async (data) => {
       auth.login(data.login);
@@ -21,10 +23,15 @@ const Login = ({ auth, url }) => {
     }
   })
 
-  const handleLogin = async (values) => {
+  const handleLogin = async (valuesObj) => {
+
+    if (!valuesObj.email || !valuesObj.password) return;
+    setHideSubmitButton(true);
+
     try {
       // query user ? set user context & set token : show error
-      await queryLogin({ variables: values });
+      await queryLogin({ variables: valuesObj });
+      setHideSubmitButton(false);
     } catch (error) {
       // FIXME: Handle Error ( alert context maybe?)
       if (error.name === 'ValidationError') {
@@ -33,6 +40,7 @@ const Login = ({ auth, url }) => {
       } else {
         console.log(error.message);
       }
+      setHideSubmitButton(false);
     }
   }
 
@@ -67,7 +75,10 @@ const Login = ({ auth, url }) => {
           <Link to="/register" className="inline-block mx-10 my-2 py-2 underline">Create an account</Link>
         </div>
         <div className="text-center mt-2">
-          <button type="submit" className="py-3 px-6 text-lg text-white rounded-lg font-medium bg-gray-800 hover:bg-gray-700 w-3/4 md:w-1/2">Login</button>
+          {!hideSubmitButton ? <button type="submit" className="py-3 px-6 text-lg text-white rounded-lg font-medium bg-gray-800 hover:bg-gray-700 w-3/4 md:w-1/2">Login</button>
+            :
+            <p className="text-gray-600">Please wait...</p>
+          }
         </div>
       </Form>
     </Formik>
@@ -77,6 +88,8 @@ const Login = ({ auth, url }) => {
 const Register = ({ auth }) => {
   const [showPasswordTip, togglePasswordTip] = useToggle(false);
   const [passwordType, setPasswordType] = useState('password');
+  const [hideSubmitButton, setHideSubmitButton] = useState(false);
+
   const [queryRegister] = useMutation(REGISTER_USER, {
     onCompleted: async (data) => {
       auth.login(data.register);
@@ -87,13 +100,14 @@ const Register = ({ auth }) => {
     }
   })
 
-  const handleRegister = async (values) => {
+  const handleRegister = async (valuesObj) => {
+    if (!valuesObj.email || !valuesObj.password) return;
+    setHideSubmitButton(true);
 
     try {
-      // query user ? set user context & set token : show error
-      await queryRegister({ variables: values });
-    } catch (error) {
-      // FIXME: Handle Error ( alert context maybe?)
+      await queryRegister({ variables: valuesObj });
+    }
+    catch (error) {
       if (error.name === 'ValidationError') {
         console.log('validation error');
         error.errors.map(err => console.log(err));
@@ -176,7 +190,11 @@ const Register = ({ auth }) => {
           <Link to="/login" className="inline-block mx-10 my-2 p-2 underline"> Login to your account</Link>
         </div>
         <div className="text-center mt-4">
-          <button type="submit" className="py-3 px-6 text-lg font-medium bg-gray-800 hover:bg-gray-700 rounded-lg text-white w-3/4 md:w-1/2">Register</button>
+          {!hideSubmitButton ?
+            <button type="submit" className="py-3 px-6 text-lg font-medium bg-gray-800 hover:bg-gray-700 rounded-lg text-white w-3/4 md:w-1/2">Register</button>
+            :
+            <p className="text-gray-600">Please wait...</p>
+          }
         </div>
       </Form >
     </Formik>
