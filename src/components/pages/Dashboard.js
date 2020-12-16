@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Trips from '../containers/Trips';
-import Button from '../UI/Button';
+import Button from '../UI-blocks/Button';
 
 function Dashboard({ setTrip, auth, setTripEdit }) {
 

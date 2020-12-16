@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, Link } from 'react-router-dom'
 
 import { Auth, Dashboard, Trip, ExpenseItem, UserSettings, AccountDeletion } from './components/pages'
 import { TripForm, ExpenseForm, UserSettingsForm } from './components/forms'
@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import useSidebar from './hooks/useSideBar'
 import { AlertContext } from './context/alert/AlertContext'
+import Menu from './components/Menu'
 
 function App() {
   const { auth, user } = useContext(AuthContext);
@@ -21,13 +22,16 @@ function App() {
   const [expenseData, setExpenseData] = useState(null);
   // State for showing single expense info
   const [expenseItem, setExpenseItem] = useState(null)
-  const [openSidebar, setSidebar] = useSidebar();
+  const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <div className="App relative max-w-screen-xl m-auto">
 
-      <Navbar setSidebar={setSidebar} showMenu={user ? true : false} />
-      {openSidebar ? <Sidebar user={user} auth={auth} setSidebar={setSidebar} /> : null}
+      <Navbar setOpenMenu={setOpenMenu} showMenu={user ? true : false} />
+
+      {openMenu && <Menu user={user} closeMenu={setOpenMenu} />}
+
+
       <AlertComponent />
 
       <Switch>
