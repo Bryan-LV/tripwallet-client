@@ -6,7 +6,6 @@ const loginSchemaValidation = yup.object().shape({
 });
 
 const registerSchemaValidation = yup.object().shape({
-  name: yup.string().min(1).required(),
   username: yup.string()
     .min(5)
     .max(16)

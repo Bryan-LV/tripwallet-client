@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Trips from '../containers/Trips';
+import Button from '../UI/Button';
 
 function Dashboard({ setTrip, auth, setTripEdit }) {
+
   return (
     <div className="bg-gray">
 
@@ -13,11 +15,10 @@ function Dashboard({ setTrip, auth, setTripEdit }) {
           Add trip
         </Link>
 
-        <button onClick={auth.logout} className="inline-block mx-10 my-5 p-4 bg-red-600 rounded-lg text-white font-semibold">
+        <Button onClick={auth.logout} className="inline-block mx-10 my-5 p-4 bg-red-600 rounded-lg text-white font-semibold">
           Logout
-        </button>
+        </Button>
       </div>
-
     </div>
   )
 }

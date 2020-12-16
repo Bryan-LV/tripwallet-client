@@ -96,14 +96,18 @@ function TripForm({ isTripEdit }) {
   });
 
   const handleSubmit = async (values) => {
+    console.log('handle submit')
     try {
       if (selectedPhoto) {
+        console.log('select photo clause')
         values.photo = selectedPhoto;
       }
       if (isTripEdit.isEdit) {
+        console.log('edit trip clause')
         updateTrip({ variables: values })
       }
       else {
+        console.log('create trip clause')
         createTrip({
           variables: values,
           update: (cache, { data }) => {

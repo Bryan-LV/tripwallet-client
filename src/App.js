@@ -31,87 +31,87 @@ function App() {
       <AlertComponent />
 
       <Switch>
+        <div className="mx-2">
+          {/* Dashboard */}
+          <Route exact path="/" render={() => (
+            user ?
+              <Dashboard user={user} auth={auth} setTrip={setTrip} setTripEdit={setTripEdit} />
+              :
+              <Redirect to="/login" />
+          )} />
 
-        {/* Dashboard */}
-        <Route exact path="/" render={() => (
-          user ?
-            <Dashboard user={user} auth={auth} setTrip={setTrip} setTripEdit={setTripEdit} />
-            :
-            <Redirect to="/login" />
-        )} />
+          {/* Selected Trip */}
+          <Route exact path="/trip" render={() => (
+            user ?
+              <Trip trip={trip} setTripEdit={setTripEdit} setExpenseData={setExpenseData} setExpenseItem={setExpenseItem} />
+              :
+              <Redirect to="/login" />
+          )} />
 
-        {/* Selected Trip */}
-        <Route exact path="/trip" render={() => (
-          user ?
-            <Trip trip={trip} setTripEdit={setTripEdit} setExpenseData={setExpenseData} setExpenseItem={setExpenseItem} />
-            :
-            <Redirect to="/login" />
-        )} />
+          {/* Expense Item */}
+          <Route exact path="/trip/expense" render={() => (
+            user ?
+              <ExpenseItem data={expenseItem} setExpenseData={setExpenseData} alertDispatch={alertDispatch} auth={auth} />
+              :
+              <Redirect to="/login" />
+          )} />
 
-        {/* Expense Item */}
-        <Route exact path="/trip/expense" render={() => (
-          user ?
-            <ExpenseItem data={expenseItem} setExpenseData={setExpenseData} alertDispatch={alertDispatch} auth={auth} />
-            :
-            <Redirect to="/login" />
-        )} />
+          {/* Expense Form */}
+          <Route exact path="/trip/expenseform" render={() => (
+            user ?
+              <ExpenseForm expenseData={expenseData} />
+              :
+              <Redirect to="/login" />
+          )} />
 
-        {/* Expense Form */}
-        <Route exact path="/trip/expenseform" render={() => (
-          user ?
-            <ExpenseForm expenseData={expenseData} />
-            :
-            <Redirect to="/login" />
-        )} />
+          {/* Trip Form */}
+          <Route exact path="/tripform" render={() => (
+            user ?
+              <TripForm user={user} isTripEdit={isTripEdit} />
+              :
+              <Redirect to="/login" />
+          )} />
 
-        {/* Trip Form */}
-        <Route exact path="/tripform" render={() => (
-          user ?
-            <TripForm user={user} isTripEdit={isTripEdit} />
-            :
-            <Redirect to="/login" />
-        )} />
+          {/* Login Page */}
+          <Route exact path="/login" render={() => (
+            user ?
+              <Redirect to="/" />
+              :
+              <Auth auth={auth} user={user} />
+          )} />
 
-        {/* Login Page */}
-        <Route exact path="/login" render={() => (
-          user ?
-            <Redirect to="/" />
-            :
-            <Auth auth={auth} user={user} />
-        )} />
+          {/* Register Page */}
+          <Route exact path="/register" render={() => (
+            user ?
+              <Redirect to="/" />
+              :
+              <Auth auth={auth} user={user} />
+          )} />
 
-        {/* Register Page */}
-        <Route exact path="/register" render={() => (
-          user ?
-            <Redirect to="/" />
-            :
-            <Auth auth={auth} user={user} />
-        )} />
+          {/* User settings */}
+          <Route exact path="/user" render={() => (
+            user ?
+              <UserSettings user={user} />
+              :
+              <Redirect to="/login" />
+          )} />
 
-        {/* User settings */}
-        <Route exact path="/user" render={() => (
-          user ?
-            <UserSettings user={user} />
-            :
-            <Redirect to="/login" />
-        )} />
+          {/* Edit user settings */}
+          <Route exact path="/user/edit" render={() => (
+            user ?
+              <UserSettingsForm user={user} />
+              :
+              <Redirect to="/login" />
+          )} />
 
-        {/* Edit user settings */}
-        <Route exact path="/user/edit" render={() => (
-          user ?
-            <UserSettingsForm user={user} />
-            :
-            <Redirect to="/login" />
-        )} />
-
-        {/* Confirmation page to delete account */}
-        <Route exact path="/user/accountdeletion" render={() => (
-          user ?
-            <AccountDeletion user={user} auth={auth} />
-            :
-            <Redirect to="/login" />
-        )} />
-
+          {/* Confirmation page to delete account */}
+          <Route exact path="/user/accountdeletion" render={() => (
+            user ?
+              <AccountDeletion user={user} auth={auth} />
+              :
+              <Redirect to="/login" />
+          )} />
+        </div>
       </Switch>
     </div >
   );
