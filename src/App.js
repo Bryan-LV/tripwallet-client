@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { Switch, Route, Redirect, Link } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { Auth, Dashboard, Trip, ExpenseItem, UserSettings, AccountDeletion } from './components/pages'
 import { TripForm, ExpenseForm, UserSettingsForm } from './components/forms'
 import AlertComponent from './components/presentational/AlertComponent'
 import { AuthContext } from './context/auth/AuthContext'
 import Navbar from './components/Navbar'
-import Sidebar from './components/Sidebar'
-import useSidebar from './hooks/useSideBar'
 import { AlertContext } from './context/alert/AlertContext'
 import Menu from './components/Menu'
 
@@ -30,7 +28,6 @@ function App() {
       <Navbar setOpenMenu={setOpenMenu} showMenu={user ? true : false} />
 
       {openMenu && <Menu user={user} closeMenu={setOpenMenu} />}
-
 
       <AlertComponent />
 

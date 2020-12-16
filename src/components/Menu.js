@@ -16,7 +16,8 @@ function Menu({ user, closeMenu }) {
               </div>
             </div>
             <div className="pt-4 text-center" >
-              <Link to="/user" onClick={_ => closeMenu(false)} className="text-white text-xl">User settings</Link>
+              <Link to="/" onClick={_ => closeMenu(false)} className="text-white text-2xl block py-2 md:text-3xl">Dashboard</Link>
+              <Link to="/user" onClick={_ => closeMenu(false)} className="text-white text-2xl block py-2 md:text-3xl">User settings</Link>
             </div>
           </div>
         )}
