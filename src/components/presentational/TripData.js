@@ -34,7 +34,7 @@ function TripData({ data, setTripEdit, setExpenseData, setExpenseItem }) {
   }
 
   return (
-    <div className="">
+    <div className="pb-24 md:pb-0">
 
       <div className="rounded-lg bg-white max-w-md m-auto mb-4 mt-3 shadow-lg">
         <h1 className="text-4xl text-center pt-5" >{data.getTrip.tripName}</h1>

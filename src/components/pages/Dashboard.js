@@ -6,7 +6,7 @@ import Button from '../UI-blocks/Button';
 function Dashboard({ setTrip, auth, setTripEdit }) {
 
   return (
-    <div className="py-4">
+    <div className="pt-4 pb-24 md:py-4">
 
       <Trips setTrip={setTrip} />
 
