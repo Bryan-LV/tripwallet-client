@@ -24,7 +24,7 @@ function Trip({ trip, setTripEdit, setExpenseData, setExpenseItem }) {
   if (error) console.log(error);
   if (loading && !data) return <Loader />
   return (
-    <div >
+    <div className="py-4" >
       <TripData data={data} setTripEdit={setTripEdit} setExpenseData={setExpenseData} setExpenseItem={setExpenseItem} />
     </div >
   )

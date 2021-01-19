@@ -139,44 +139,62 @@ function TripForm({ isTripEdit }) {
   return (
     <div className="max-w-lg m-auto rounded-lg shadow-2xl py-8 relative">
       <div>
+        {/* Title */}
         <h2 className="text-lg font-medium mx-10 mb-4">{isTripEdit.isEdit ? `Edit ${isTripEdit.formDetails.tripName} Trip` : 'Add Trip'}</h2>
       </div>
+
       <Formik
         initialValues={isTripEdit.isEdit ? editVals(isTripEdit.formDetails) : initVals}
         validationSchema={validation}
         onSubmit={handleSubmit}>
         <Form className="mt-2">
+
+          {/* Trip name */}
           <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
             <Field type="text" name="tripName" placeholder="Trip name" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
           </div>
           <ErrorMessage name="tripName">{(errorMsg) => <p className="mx-10 text-red-700">{errorMsg}</p>}</ErrorMessage>
+
+          {/* Trip Currency */}
           <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10 mb-8">
             <Field name="foreignCurrency" as="select" placeholder="Select Currency" placeholder="foreign currency" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none">
               {currencyCodes.map(currencyCode => <option key={currencyCode} value={currencyCode}>{currencyCode}</option>)}
             </Field>
           </div>
-          <p className="mx-10 text-gray-400">(optional)</p>
           <ErrorMessage name="foreignCurrency">{(errorMsg) => <p className="mx-10 text-red-700">{errorMsg}</p>}</ErrorMessage>
-          <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
+
+          {/* Budget */}
+          <p className="mx-10  text-gray-400">(optional)</p>
+          <div className="md:flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
             <p className="text-md pl-2">Budget</p>
             <Field type="number" name="budget" placeholder="Budget" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
           </div>
-          <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
+
+          {/* Start Date */}
+          <div className="md:flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
             <label htmlFor="startDate" className="text-md px-2">Start Date</label>
-            <DatePickerField name="startDate" className="bg-transparent" />
+            <DatePickerField name="startDate" className="bg-transparent pl-2 text-gray-800" />
           </div>
-          <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
+
+          {/* End Date */}
+          <div className="md:flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
             <label htmlFor="startDate" className="text-md px-2">End Date</label>
-            <DatePickerField name="endDate" className="bg-transparent" />
+            <DatePickerField name="endDate" className="bg-transparent pl-2" />
           </div>
 
-
-          <p className="mx-10 text-gray-400 pt-6">(search for a photo for your trip)</p>
-          <div className="flex items-center border-b border-b-2 border-gray-900 mx-10">
+          {/* Trip Photo */}
+          <p className="mx-10 text-gray-400 pt-6 pb-2">(search for trip photo)</p>
+          <div className="sm:flex items-center border-b border-b-2 border-gray-900 mx-10">
             <input type="text" name="photo" value={searchPhoto} onChange={(e) => setSearchPhoto(e.target.value)} placeholder="Photo" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
-            <p className="py-3 text-sm w-full text-center bg-gray-700 text-white rounded-lg cursor-pointer" onClick={searchPexels}>Search Photos</p>
-            {openPhotoModal && <PhotoSearchResults searchProp={searchProp} closeModal={closePhotoModal} setSelectedPhoto={setSelectedPhoto} />}
+
           </div>
+
+          <div className="text-right relative">
+            <p className="py-3 my-1  text-sm text-center bg-gray-700 text-white rounded-lg cursor-pointer w-3/4 md:w-1/2" onClick={searchPexels}>Search Photos</p>
+          </div>
+
+          {openPhotoModal && <PhotoSearchResults searchProp={searchProp} closeModal={closePhotoModal} setSelectedPhoto={setSelectedPhoto} />}
+
           <div className="mx-10 my-4">
             {selectedPhoto && <img src={selectedPhoto} alt="" />}
           </div>

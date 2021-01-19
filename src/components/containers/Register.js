@@ -115,7 +115,7 @@ function Register({ auth }) {
 
         {/* Submit Button */}
         <div className="text-center mt-4">
-          <button type="submit" className={`py-3 px-6 text-lg font-medium bg-gray-800 hover:bg-gray-700 rounded-lg text-white w-3/4 md:w-1/2 ${buttonDisabled && 'opacity-50 cursor-wait'}`}>Register</button>
+          <button type="submit" className={`py-3 px-6 text-lg font-medium bg-gray-900 hover:bg-gray-800 rounded-lg text-white w-3/4 md:w-1/2 ${buttonDisabled && 'opacity-50 cursor-wait'}`}>Register</button>
         </div>
       </Form >
     </Formik>
