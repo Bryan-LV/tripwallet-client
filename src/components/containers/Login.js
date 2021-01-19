@@ -46,7 +46,7 @@ function Login({ auth }) {
       onSubmit={handleLogin}
     >
       <Form>
-        <h3 className="mx-10 text-2xl mb-2 text-gray-900">Welcome Back</h3>
+        {/* <h3 className="mx-10 text-2xl mb-2 text-gray-900">Welcome back</h3> */}
         <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
           <Field type="text" placeholder="Email" name="email" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
         </div>
@@ -70,7 +70,7 @@ function Login({ auth }) {
           <Link to="/register" className="inline-block mx-10 my-2 py-2 underline">Create an account</Link>
         </div>
         <div className="text-center mt-2">
-          <button type="submit" disabled={buttonDisabled} className={`py-3 px-6 text-lg text-white rounded-lg font-medium bg-gray-800 hover:bg-gray-700 w-3/4 md:w-1/2 ${buttonDisabled && 'opacity-50 cursor-wait'}`}>Login</button>
+          <button type="submit" disabled={buttonDisabled} className={`py-3 px-6 text-lg text-white rounded-lg font-medium bg-gray-900 hover:bg-gray-800 w-3/4 md:w-1/2 ${buttonDisabled && 'opacity-50 cursor-wait'}`}>Login</button>
         </div>
       </Form>
     </Formik >

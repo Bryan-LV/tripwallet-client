@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import { AlertContext } from './context/alert/AlertContext'
 import Menu from './components/Menu'
 
+
 function App() {
   const { auth, user } = useContext(AuthContext);
   const { alertDispatch } = useContext(AlertContext);
@@ -25,11 +26,12 @@ function App() {
   return (
     <div className="App relative max-w-screen-xl m-auto">
 
-      <Navbar setOpenMenu={setOpenMenu} showMenu={user ? true : false} />
+      {user ? <Navbar setOpenMenu={setOpenMenu} showMenu={user ? true : false} /> : null}
 
       {openMenu && <Menu user={user} closeMenu={setOpenMenu} />}
 
       <AlertComponent />
+
 
       <Switch>
         <div className="mx-2">
@@ -114,6 +116,7 @@ function App() {
           )} />
         </div>
       </Switch>
+
     </div >
   );
 }

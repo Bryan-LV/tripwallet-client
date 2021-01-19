@@ -70,7 +70,7 @@ function TripData({ data, setTripEdit, setExpenseData, setExpenseItem }) {
         }} />
 
 
-      <div className="flex flex-row justify-between items-end px-8 bg-white rounded-lg shadow-lg">
+      <div className="flex flex-row justify-between items-end px-8 bg-white rounded-lg shadow-lg fixed bottom-0 left-0 right-0 w-full md:relative">
         <Link to="/tripform" onClick={() => setTripEdit({ isEdit: true, formDetails: data.getTrip })} className="inline-block my-5 rounded-full p-2 hover:bg-gray-200">
           <div className="w-10">
             <img className="relative trip-icons" src={pen} alt="edit trip" />
