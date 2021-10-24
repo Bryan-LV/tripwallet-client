@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useHistory, Route } from 'react-router-dom'
 import Login from '../containers/Login'
 import Register from '../containers/Register'

@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import { Auth, Dashboard, Trip, ExpenseItem, UserSettings, AccountDeletion } from './components/pages'
-import { TripForm, ExpenseForm, UserSettingsForm } from './components/forms'
-import AlertComponent from './components/presentational/AlertComponent'
-import { AuthContext } from './context/auth/AuthContext'
-import Navbar from './components/Navbar'
-import { AlertContext } from './context/alert/AlertContext'
-import Menu from './components/Menu'
+import { Auth, Dashboard, Trip, ExpenseItem, UserSettings, AccountDeletion } from './components/pages';
+import { TripForm, ExpenseForm, UserSettingsForm } from './components/forms';
+import AlertComponent from './components/presentational/AlertComponent';
+import { AuthContext } from './context/auth/AuthContext';
+import Navbar from './components/Navbar';
+import { AlertContext } from './context/alert/AlertContext';
+import Menu from './components/Menu';
 
 
 function App() {
