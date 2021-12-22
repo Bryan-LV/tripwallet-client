@@ -63,7 +63,6 @@ const getCurrenciesFromLS = () => {
   return tripCurrencies
 }
 
-
 function ExpenseForm({ expenseData }) {
   const { alertDispatch } = useContext(AlertContext);
   const tripID = expenseData ? expenseData.tripID : JSON.parse(localStorage.getItem('tripID'));

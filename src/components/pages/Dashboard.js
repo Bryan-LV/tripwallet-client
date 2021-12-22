@@ -10,7 +10,7 @@ function Dashboard({ setTrip, auth, setTripEdit }) {
 
       <Trips setTrip={setTrip} />
 
-      <div className="text-right fixed bottom-0 right-0 left-0 w-full md:relative bg-gray-100">
+      <div className="text-right fixed bottom-0 right-0 left-0 w-full bg-gray-100">
         <Link to="/tripform" onClick={() => setTripEdit({ isEdit: false, formDetails: null })} className="inline-block mx-10 my-5 p-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg">
           Add trip
         </Link>

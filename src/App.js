@@ -9,7 +9,6 @@ import Navbar from './components/Navbar';
 import { AlertContext } from './context/alert/AlertContext';
 import Menu from './components/Menu';
 
-
 function App() {
   const { auth, user } = useContext(AuthContext);
   const { alertDispatch } = useContext(AlertContext);

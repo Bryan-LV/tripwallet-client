@@ -13,17 +13,12 @@ function Login({ auth }) {
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const [queryLogin] = useMutation(LOGIN_USER, {
-    onCompleted: async (data) => {
-      auth.login(data.login);
-    },
-    onError: () => {
-      alertDispatch.setAlert('Uh oh, looks like you entered in a wrong email or password');
-    }
+    onCompleted: async (data) => auth.login(data.login),
+    onError: () => alertDispatch.setAlert('Uh oh, looks like you entered in a wrong email or password')
   })
 
   const handleLogin = async (valuesObj) => {
     setButtonDisabled(true);
-
     try {
       await queryLogin({ variables: valuesObj });
       setButtonDisabled(false);
@@ -39,7 +34,6 @@ function Login({ auth }) {
       onSubmit={handleLogin}
     >
       <Form>
-        {/* <h3 className="mx-10 text-2xl mb-2 text-gray-900">Welcome back</h3> */}
         <div className="flex items-center border-b border-b-2 border-gray-900 py-2 mx-10">
           <Field type="text" placeholder="Email" name="email" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
         </div>
