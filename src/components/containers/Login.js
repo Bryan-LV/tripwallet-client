@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { useMutation } from '@apollo/client'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import { Link } from 'react-router-dom'
+import { useMutation } from '@apollo/client';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Link } from 'react-router-dom';
 
 import { AlertContext } from '../../context/alert/AlertContext';
-import { loginSchemaValidation } from '../../utils/authFormValidation'
-import { LOGIN_USER } from '../../queries/user'
+import { loginSchemaValidation } from '../../utils/authFormValidation';
+import { LOGIN_USER } from '../../queries/user';
 
 function Login({ auth }) {
   const { alertDispatch } = useContext(AlertContext);
@@ -28,13 +28,6 @@ function Login({ auth }) {
       await queryLogin({ variables: valuesObj });
       setButtonDisabled(false);
     } catch (error) {
-      // FIXME: Handle Error ( alert context maybe?)
-      if (error.name === 'ValidationError') {
-        console.log('validation error');
-        error.errors.map(err => console.log(err));
-      } else {
-        console.log(error.message);
-      }
       setButtonDisabled(false);
     }
   }
@@ -73,7 +66,7 @@ function Login({ auth }) {
           <button type="submit" disabled={buttonDisabled} className={`py-3 px-6 text-lg text-white rounded-lg font-medium bg-gray-900 hover:bg-gray-800 w-3/4 md:w-1/2 ${buttonDisabled && 'opacity-50 cursor-wait'}`}>Login</button>
         </div>
       </Form>
-    </Formik >
+    </Formik>
   )
 }
 
