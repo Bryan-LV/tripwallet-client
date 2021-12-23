@@ -185,11 +185,11 @@ function TripForm({ isTripEdit }) {
           {/* Trip Photo */}
           <p className="mx-10 text-gray-400 pt-6 pb-2">(search for trip photo)</p>
           <div className="sm:flex items-center border-b border-b-2 border-gray-900 mx-10">
-            <input type="text" name="photo" value={searchPhoto} onChange={(e) => setSearchPhoto(e.target.value)} placeholder="Photo" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
+            <input type="text" name="photo" value={searchPhoto} onChange={(e) => setSearchPhoto(e.target.value)} placeholder="eg. Mexico" className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" />
 
           </div>
 
-          <div className="text-right relative">
+          <div className="text-right relative mx-10 mt-2 mb-5">
             <p className="py-3 my-1  text-sm text-center bg-gray-700 text-white rounded-lg cursor-pointer w-3/4 md:w-1/2" onClick={searchPexels}>Search Photos</p>
           </div>
 
