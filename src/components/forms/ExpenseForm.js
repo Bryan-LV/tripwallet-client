@@ -108,7 +108,7 @@ function ExpenseForm({ expenseData }) {
       
       setExchangeRate({ ...response , dateFetched: createYMDDate() });
       localStorage.setItem('rates', JSON.stringify({ ...response, dateFetched: createYMDDate() }));
-      
+
     } catch (error) {
       console.warn('could not fetch exchange rates');
     }
@@ -145,7 +145,7 @@ function ExpenseForm({ expenseData }) {
         fetchExchangeRate();
         return;
       }
-      // if it passes both match and day expiration then use those rates
+      // if it passes both match and date expiration then use those rates
       setExchangeRate(rates);
     }
 
