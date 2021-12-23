@@ -1,26 +1,21 @@
 import React, { useContext, useState } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import { Auth, Dashboard, Trip, ExpenseItem, UserSettings, AccountDeletion } from './components/pages'
-import { TripForm, ExpenseForm, UserSettingsForm } from './components/forms'
-import AlertComponent from './components/presentational/AlertComponent'
-import { AuthContext } from './context/auth/AuthContext'
-import Navbar from './components/Navbar'
-import { AlertContext } from './context/alert/AlertContext'
-import Menu from './components/Menu'
-
+import { Auth, Dashboard, Trip, ExpenseItem, UserSettings, AccountDeletion } from './components/pages';
+import { TripForm, ExpenseForm, UserSettingsForm } from './components/forms';
+import AlertComponent from './components/presentational/AlertComponent';
+import { AuthContext } from './context/auth/AuthContext';
+import Navbar from './components/Navbar';
+import { AlertContext } from './context/alert/AlertContext';
+import Menu from './components/Menu';
 
 function App() {
   const { auth, user } = useContext(AuthContext);
   const { alertDispatch } = useContext(AlertContext);
-  // User's selected trip
-  const [trip, setTrip] = useState(null);
-  // Is trip form creating a new trip or editing a trip
-  const [isTripEdit, setTripEdit] = useState({ isEdit: false });
-  // For editing expense
-  const [expenseData, setExpenseData] = useState(null);
-  // State for showing single expense info
-  const [expenseItem, setExpenseItem] = useState(null)
+  const [trip, setTrip] = useState(null); // User's selected trip
+  const [isTripEdit, setTripEdit] = useState({ isEdit: false }); // Is trip form creating a new trip or editing a trip
+  const [expenseData, setExpenseData] = useState(null); // For editing expense
+  const [expenseItem, setExpenseItem] = useState(null) // State for showing single expense info
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
@@ -31,7 +26,6 @@ function App() {
       {openMenu && <Menu user={user} closeMenu={setOpenMenu} />}
 
       <AlertComponent />
-
 
       <Switch>
         <div className="mx-2">

@@ -63,7 +63,6 @@ const getCurrenciesFromLS = () => {
   return tripCurrencies
 }
 
-
 function ExpenseForm({ expenseData }) {
   const { alertDispatch } = useContext(AlertContext);
   const tripID = expenseData ? expenseData.tripID : JSON.parse(localStorage.getItem('tripID'));
@@ -98,26 +97,42 @@ function ExpenseForm({ expenseData }) {
   })
 
   const fetchExchangeRate = async () => {
-    const req = await Axios.get(`https://api.exchangeratesapi.io/latest?base=${currencies.baseCurrency}&symbols=${currencies.baseCurrency},${currencies.foreignCurrency}`);
-    setExchangeRate({ ...req.data, dateFetched: createYMDDate() });
-    localStorage.setItem('rates', JSON.stringify({ ...req.data, dateFetched: createYMDDate() }));
+    try {
+      const request = await fetch(`https://open.er-api.com/v6/latest/${currencies.baseCurrency}`);
+      const response = await request.json();
+      
+      delete response.time_last_update_unix
+      delete response.time_next_update_unix
+      delete response.time_last_update_utc
+      delete response.time_next_update_utc
+      
+      setExchangeRate({ ...response , dateFetched: createYMDDate() });
+      localStorage.setItem('rates', JSON.stringify({ ...response, dateFetched: createYMDDate() }));
+
+    } catch (error) {
+      console.warn('could not fetch exchange rates');
+    }
   }
 
   useEffect(() => {
     function getCurrency() {
       let rates = localStorage.getItem('rates') ? JSON.parse(localStorage.getItem('rates')) : false;
+
       if (!rates) {
         // if no rates, hit the api & set to local storage
         fetchExchangeRate()
         return;
       }
+
       // if there are rates, then loop through rates in object, check if foreignCurrency in props matches FC in rates obj
+      // this is to limit the number of api requests made (if user leaves trip then returns to same trip)
       let currencyIsCorrect;
       for (const currency in rates.rates) {
         if (currency === currencies.foreignCurrency) {
           currencyIsCorrect = true;
         }
       }
+
       if (!currencyIsCorrect) {
         // if it does not match hit api
         fetchExchangeRate()
@@ -130,7 +145,7 @@ function ExpenseForm({ expenseData }) {
         fetchExchangeRate();
         return;
       }
-      // if it passes both match and day expiration then use those rates
+      // if it passes both match and date expiration then use those rates
       setExchangeRate(rates);
     }
 
