@@ -6,7 +6,6 @@ import DatePickerField from './DatePickerField'
 import { useMutation } from '@apollo/client';
 import currencyjs from 'currency.js'
 import * as yup from 'yup';
-import Axios from 'axios'
 import dayjs from 'dayjs'
 
 import { AlertContext } from '../../context/alert/AlertContext'
